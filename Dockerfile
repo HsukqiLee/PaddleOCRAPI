@@ -4,6 +4,10 @@ FROM python:3.8-slim-bullseye
 # 暴露端口
 EXPOSE 8000
 
+# 下载模型文件
+WORKDIR /app/pp-ocrv4
+RUN sh download_det_cls_rec.sh || true
+
 # 设置工作目录
 WORKDIR /app
 
