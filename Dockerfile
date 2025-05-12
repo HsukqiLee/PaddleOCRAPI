@@ -50,9 +50,9 @@ RUN mkdir -p /app/models/det /app/models/rec /app/models/cls \
     && chmod -R 777 /app/models
 
 # 复制并解压模型文件
-COPY pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar /app/models/cls/
-COPY pp-ocrv4/ch_PP-OCRv4_det_infer.tar /app/models/det/
-COPY pp-ocrv4/ch_PP-OCRv4_rec_infer.tar /app/models/rec/
+COPY /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar /app/models/cls/
+COPY /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar /app/models/det/
+COPY /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar /app/models/rec/
 
 RUN tar xf /app/models/cls/ch_ppocr_mobile_v2.0_cls_infer.tar -C /app/models/cls/ 2>/dev/null || true \
     && tar xf /app/models/det/ch_PP-OCRv4_det_infer.tar -C /app/models/det/ 2>/dev/null || true \
