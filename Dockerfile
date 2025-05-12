@@ -45,19 +45,18 @@ COPY . /app
 #    tar xf /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar -C /root/.paddleocr/whl/rec/ch/ && \
 #    rm -rf /app/pp-ocrv4/*.tar
 
-# 创建模型存储目录并设置权限
 RUN mkdir -p /app/models/det /app/models/rec /app/models/cls \
-    && chmod -R 777 /app/models
+    && chmod -R 777 /app/models \
+    && cp /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar /app/models/cls/ 2>/dev/null || true \
+    && cp /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar /app/models/det/ 2>/dev/null || true \
+    && cp /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar /app/models/rec/ 2>/dev/null || true
 
-# 复制并解压模型文件
-COPY /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar /app/models/cls/
-COPY /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar /app/models/det/
-COPY /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar /app/models/rec/
-
+# 解压模型文件
 RUN tar xf /app/models/cls/ch_ppocr_mobile_v2.0_cls_infer.tar -C /app/models/cls/ 2>/dev/null || true \
     && tar xf /app/models/det/ch_PP-OCRv4_det_infer.tar -C /app/models/det/ 2>/dev/null || true \
     && tar xf /app/models/rec/ch_PP-OCRv4_rec_infer.tar -C /app/models/rec/ 2>/dev/null || true \
-    && rm -rf /app/models/*/*.tar
+    && rm -rf /app/models/*/*.tar 2>/dev/null || true
+
 
 # 启动命令
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "2", "--log-config", "./log_conf.yaml"]
