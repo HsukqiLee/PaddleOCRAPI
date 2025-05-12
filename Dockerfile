@@ -2,7 +2,7 @@
 FROM python:3.8-slim-bullseye
 
 # 暴露端口
-EXPOSE 8000
+EXPOSE 7860
 
 # 换源并安装系统依赖
 RUN apt-get update && \
@@ -46,4 +46,4 @@ RUN mkdir -p /root/.paddleocr/whl/cls/ && \
     rm -rf /app/pp-ocrv4/*.tar
 
 # 启动命令
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--workers", "2", "--log-config", "./log_conf.yaml"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "2", "--log-config", "./log_conf.yaml"]
