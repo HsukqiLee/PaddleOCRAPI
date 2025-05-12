@@ -6,7 +6,9 @@ EXPOSE 8000
 
 # 下载模型文件
 WORKDIR /app/pp-ocrv4
-RUN sh download_det_cls_rec.sh || true
+RUN wget https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_det_infer.tar
+RUN wget https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar
+RUN wget https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_rec_infer.tar
 
 # 设置工作目录
 WORKDIR /app
