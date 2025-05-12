@@ -37,13 +37,27 @@ RUN python3 -m pip install --upgrade pip && \
 COPY . /app
 
 # 创建模型目录并解压模型文件
-RUN mkdir -p /root/.paddleocr/whl/cls/ && \
+# RUN mkdir -p /root/.paddleocr/whl/cls/ && \
     mkdir -p /root/.paddleocr/whl/det/ch/ && \
     mkdir -p /root/.paddleocr/whl/rec/ch/ && \
     tar xf /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar -C /root/.paddleocr/whl/cls/ 2>/dev/null && \
     tar xf /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar -C /root/.paddleocr/whl/det/ch/ && \
     tar xf /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar -C /root/.paddleocr/whl/rec/ch/ && \
     rm -rf /app/pp-ocrv4/*.tar
+
+# 创建模型存储目录并设置权限
+RUN mkdir -p /app/models/det /app/models/rec /app/models/cls \
+    && chmod -R 777 /app/models
+
+# 复制并解压模型文件
+COPY pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar /app/models/cls/
+COPY pp-ocrv4/ch_PP-OCRv4_det_infer.tar /app/models/det/
+COPY pp-ocrv4/ch_PP-OCRv4_rec_infer.tar /app/models/rec/
+
+RUN tar xf /app/models/cls/ch_ppocr_mobile_v2.0_cls_infer.tar -C /app/models/cls/ 2>/dev/null || true \
+    && tar xf /app/models/det/ch_PP-OCRv4_det_infer.tar -C /app/models/det/ 2>/dev/null || true \
+    && tar xf /app/models/rec/ch_PP-OCRv4_rec_infer.tar -C /app/models/rec/ 2>/dev/null || true \
+    && rm -rf /app/models/*/*.tar
 
 # 启动命令
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "2", "--log-config", "./log_conf.yaml"]
