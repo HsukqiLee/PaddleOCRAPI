@@ -12,7 +12,13 @@ OCR_LANGUAGE = os.environ.get("OCR_LANGUAGE", "ch")
 
 router = APIRouter(prefix="/ocr", tags=["OCR"])
 
-ocr = PaddleOCR(use_angle_cls=True, lang=OCR_LANGUAGE)
+ocr = PaddleOCR(
+    use_angle_cls=True,
+    lang=OCR_LANGUAGE,
+    det_model_dir="/app/models/det/ch_PP-OCRv4_det_infer",
+    rec_model_dir="/app/models/rec/ch_PP-OCRv4_rec_infer",
+    cls_model_dir="/app/models/cls/ch_ppocr_mobile_v2.0_cls_infer"
+)
 
 
 @router.get('/predict-by-path', response_model=RestfulModel, summary="识别本地图片")
