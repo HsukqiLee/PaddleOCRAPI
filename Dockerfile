@@ -38,12 +38,12 @@ COPY . /app
 
 # 创建模型目录并解压模型文件
 # RUN mkdir -p /root/.paddleocr/whl/cls/ && \
-    mkdir -p /root/.paddleocr/whl/det/ch/ && \
-    mkdir -p /root/.paddleocr/whl/rec/ch/ && \
-    tar xf /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar -C /root/.paddleocr/whl/cls/ 2>/dev/null && \
-    tar xf /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar -C /root/.paddleocr/whl/det/ch/ && \
-    tar xf /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar -C /root/.paddleocr/whl/rec/ch/ && \
-    rm -rf /app/pp-ocrv4/*.tar
+#    mkdir -p /root/.paddleocr/whl/det/ch/ && \
+#    mkdir -p /root/.paddleocr/whl/rec/ch/ && \
+#    tar xf /app/pp-ocrv4/ch_ppocr_mobile_v2.0_cls_infer.tar -C /root/.paddleocr/whl/cls/ 2>/dev/null && \
+#    tar xf /app/pp-ocrv4/ch_PP-OCRv4_det_infer.tar -C /root/.paddleocr/whl/det/ch/ && \
+#    tar xf /app/pp-ocrv4/ch_PP-OCRv4_rec_infer.tar -C /root/.paddleocr/whl/rec/ch/ && \
+#    rm -rf /app/pp-ocrv4/*.tar
 
 # 创建模型存储目录并设置权限
 RUN mkdir -p /app/models/det /app/models/rec /app/models/cls \
